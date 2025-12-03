@@ -23,7 +23,7 @@ def create_project_issue(
         title (str): A concise summary of the issue.
         description (str): Detailed technical description or acceptance criteria.
         type_id (int): The numeric ID for the issue type:
-                       24=Story, 23=Task, 21=Bug, 25=Epic, 22=Feature.
+                       2=Story, 10=Task, 1=Bug, 12=Epic, 11=Feature.
         story_points (int, optional): Fibonacci complexity estimate (1, 2, 3, 5, 8). Default 0.
         priority (str, optional): Importance level ("low", "medium", "high"). Default "medium".
         status (str, optional): Current state. Default "open".
@@ -52,37 +52,52 @@ def create_project_issue(
     }
     
     # Set up headers with JWT token
-    print(token)
+    print(f"Token being used: {token}")
     headers = {
         "Authorization": f"Bearer {jwt_token}",
         "Content-Type": "application/json"
     }
     
     # API endpoint
-    api_url = f"http://localhost:8000/api/projects/{project_id}/issues"
+    api_url = f"http://0.0.0.0:8001/api/projects/{project_id}/issues"
+    print(f"Making request to: {api_url}")
+    print(f"Headers: {headers}")
+    print(f"Payload: {payload}")
     
     try:
         # Send authenticated request
         response = requests.post(api_url, json=payload, headers=headers, timeout=10)
-        response.raise_for_status()
-        return response.json()
+        print(f"Response status: {response.status_code}")
+        print(f"Response body: {response.text}")
+        
+        # Check if request was successful
+        if response.status_code >= 200 and response.status_code < 300:
+            return response.json()
+        else:
+            return {
+                "error": f"HTTP {response.status_code} error",
+                "details": f"Server returned status {response.status_code}",
+                "response_body": response.text,
+                "payload_sent": payload
+            }
     
     except requests.exceptions.HTTPError as e:
         # Handle HTTP errors (4xx, 5xx)
-        print(e)
+        print(f"HTTP error occurred: {e}")
         return {
-            "error": f"HTTP {response.status_code} error",
+            "error": f"HTTP {response.status_code if 'response' in locals() else 'unknown'} error",
             "details": str(e),
-            "response_body": response.text if response else None,
-            "payload_attempted": payload
+            "response_body": response.text if 'response' in locals() else None,
+            "payload_sent": payload
         }
     
     except requests.exceptions.RequestException as e:
         # Handle other request errors (connection, timeout, etc.)
+        print(f"Request error occurred: {e}")
         return {
             "error": "Failed to create issue",
             "details": str(e),
-            "payload_attempted": payload
+            "payload_sent": payload
         }
 
 

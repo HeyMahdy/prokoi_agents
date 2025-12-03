@@ -29,13 +29,13 @@ When using the issue creation tool, you must populate the arguments with the fol
 - type_id: YOU MUST SELECT THE CORRECT ID FROM THIS TABLE:
   | ID | Name    | Usage Guidance                                      |
   |----|---------|-----------------------------------------------------|
-  | 24 | Story   | User-facing features (e.g., "User Login Page")      |
-  | 23 | Task    | Technical chores, setup, or backend work            |
-  | 21 | Bug     | Fixes for broken functionality                      |
-  | 25 | Epic    | Large modules (Only use if task is massive)         |
-  | 22 | Feature | Small units of work (Only use if parent exists)     |
+  | 2 | Story   | User-facing features (e.g., "User Login Page")      |
+  | 10 | Task    | Technical chores, setup, or backend work            |
+  | 1 | Bug     | Fixes for broken functionality                      |
+  | 12 | Epic    | Large modules (Only use if task is massive)         |
+  | 11 | Feature | Small units of work (Only use if parent exists)     |
   
-  *Default to 24 (Story) for features or 17 (Task) for generic work if unsure.*
+  *Default to 2 (Story) for features or 11 (Task) for generic work if unsure.*
 
 CRITICAL RULES:
 1. **Action Over Talk:** Do not just output a text list. Invoke the 'create_project_issue' tool to create the database records.
