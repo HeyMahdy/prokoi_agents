@@ -1,8 +1,6 @@
 # app/worker.py
 from celery import Celery
 import os
-from langchain.chat_models import init_chat_model   
-from app.tools import tools  
 from dotenv import load_dotenv
 load_dotenv()
 REDIS_URL = os.getenv("REDIS_URL")

@@ -59,7 +59,7 @@ def create_project_issue(
     }
     
     # API endpoint
-    api_url = f"http://0.0.0.0:8001/api/projects/{project_id}/issues"
+    api_url = f"http://server:8001/api/projects/{project_id}/issues"
     print(f"Making request to: {api_url}")
     print(f"Headers: {headers}")
     print(f"Payload: {payload}")
